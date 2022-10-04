@@ -1,0 +1,29 @@
+.button {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--button-radius);
+  height: 42px;
+  width: fit-content;
+  cursor: pointer !important;
+  padding: 5px 23px;
+  background: var(--surface-lavendar);
+  color: var(--text-biege);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.plain {
+  border: none;
+}
+
+.decorated {
+  text-decoration: underline;
+  color: var(--text-blue-link);
+}
+
+.link {
+  cursor: pointer;
+}

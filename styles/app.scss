@@ -1,0 +1,109 @@
+// ===== GLOBAL VARIABLES =====
+:root {
+  --header-height: 65px;
+  --footer-height: 160px;
+  --button-radius: 5px;
+  --surface-blue-black: #162122;
+  --surface-white: #ffffff;
+  --surface-dark-turquoise: #40a492;
+  --surface-light-green: #8cf8df55;
+  --surface-light-blue: #7ed5ec11;
+  --surface-light-maroon: #eccaf111;
+  --surface-light-turquoise: #7eecca11;
+  --surface-dark-blue: #161b22;
+  --surface-purple: #130d18;
+  --surface-lavendar: #443f57;
+  --text-burnt-orange: #dfa676;
+  --text-blue-link: #36a3ff;
+  --border-focus: #36a3ff;
+  --text-white: #ffffff;
+  --text-biege: #f9eee6;
+  --border-light: #343434;
+  --border-super-light: #9e9e9e;
+  --git-green: #39d353bb;
+  --text-burnt-red: #f07878;
+  --input-black: #101010;
+  --button-deep-green: #0c7760;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--surface-purple);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+h1 {
+  font-size: 50px !important;
+  margin: 5px 0 !important;
+}
+
+h2 {
+  font-size: 32px !important;
+  margin: 0;
+}
+
+h3 {
+  font-size: 28px !important;
+}
+
+h4 {
+  font-size: 24px !important;
+}
+
+p {
+  font-size: 18px !important;
+  line-height: 1.3 !important;
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 35px !important;
+  }
+  h2 {
+    font-size: 28px !important;
+  }
+  h3 {
+    font-size: 24px !important;
+  }
+  h4 {
+    font-size: 20px !important;
+  }
+  p {
+    font-size: 16px !important;
+  }
+}

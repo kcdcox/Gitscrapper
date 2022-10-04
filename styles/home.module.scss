@@ -1,0 +1,68 @@
+.home {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.home__content {
+  position: relative;
+  bottom: calc((var(--footer-height) - var(--header-height)) / 2);
+  height: auto;
+  min-height: calc(100% - var(--header-height) - var(--footer-height) - 100px);
+  width: 1200px;
+  max-width: 90%;
+  background: var(--surface-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 60px 60px;
+  background: var(--surface-light-green);
+  border: 1px solid var(--border-light);
+}
+
+.home__github {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  height: 100%;
+  font-size: 50px;
+  width: 100%;
+  color: var(--text-burnt-orange);
+}
+
+.home__background {
+  position: absolute;
+  display: block;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: -10;
+  background-image: url("../public/images/renato-ramos-landscape-rainbow.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.18;
+}
+
+@media only screen and (max-width: 600px) {
+  .home__content {
+    max-width: 100%;
+    border-radius: 0px;
+  }
+}
