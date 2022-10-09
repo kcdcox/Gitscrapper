@@ -6,6 +6,7 @@ import styles from "./button.module.scss";
 
 interface Props {
   title: string;
+  children: React.ReactNode;
   url?: string;
   plain?: boolean;
   decorated?: boolean;
@@ -18,6 +19,7 @@ interface Props {
 
 const Button = ({
   title,
+  children,
   url,
   plain,
   color,
@@ -50,10 +52,11 @@ const Button = ({
         background: background ?? defaultBackground,
         color: color ?? defaultColor,
       }}
+      title={title}
       onClick={useDisableClick}
       className={className}
     >
-      {title}
+      {children}
     </div>
   );
 

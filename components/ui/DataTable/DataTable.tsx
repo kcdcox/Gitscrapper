@@ -19,7 +19,6 @@ interface Props {
 }
 
 const DataTable = ({ colJust, headings, rows, footer, showFooter }: Props) => {
-  console.log(rows);
   const renderHeader = (
     <thead className={styles.head}>
       <tr className={styles.head_row}>

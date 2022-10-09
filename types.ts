@@ -17,6 +17,7 @@ export interface PRFilters {
   author: string;
   open: BoolOrBoth;
   merged: BoolOrBoth;
+  assigned: BoolOrBoth;
   comments?: string[];
   repos?: string[];
 }
