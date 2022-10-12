@@ -23,9 +23,9 @@ const DataTable = ({ colJust, headings, rows, footer, showFooter }: Props) => {
     <thead className={styles.head}>
       <tr className={styles.head_row}>
         {headings.map((heading, index) => (
-          <td key={index} className={styles.head__row__cell}>
+          <th key={index} className={styles.head__row__cell}>
             {heading}
-          </td>
+          </th>
         ))}
       </tr>
     </thead>

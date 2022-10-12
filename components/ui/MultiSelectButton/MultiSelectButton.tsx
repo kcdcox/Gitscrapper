@@ -1,11 +1,13 @@
 import React from "react";
 import Link from "next/link";
+import { SelectOption } from "../../../types";
 
 import { classNames } from "../../../utilities/styling";
-import styles from "./button.module.scss";
+import styles from "./multiSelectButton.module.scss";
 
 interface Props {
-  title: string;
+  name: string;
+  labels: SelectOption[];
   children: React.ReactNode;
   tooltip?: React.ReactNode;
   url?: string;
@@ -14,12 +16,11 @@ interface Props {
   background?: string;
   color?: string;
   disabled?: boolean;
-  loading?: boolean;
-  onClick?: () => void;
+  onChange(selected: string, id: string): void;
 }
 
-const Button = ({
-  title,
+const MultiSelectButton = ({
+  name,
   children,
   url,
   plain,
@@ -28,8 +29,7 @@ const Button = ({
   background,
   disabled,
   tooltip,
-  loading,
-  onClick,
+  onChange,
 }: Props) => {
   const className = classNames(
     styles.button,
@@ -38,14 +38,19 @@ const Button = ({
     disabled && styles.disabled
   );
 
+  const handleChange = onChange
+    ? (event: React.ChangeEvent<HTMLSelectElement>) =>
+        onChange(event.currentTarget.value, name)
+    : undefined;
+
   const defaultBackground = "#443f57";
   const defaultColor = "#f9eee6";
 
   const useDisableClick = () => {
-    if (!onClick || disabled || loading) {
+    if (disabled) {
       () => {};
     } else {
-      onClick();
+      handleChange;
     }
   };
 
@@ -56,7 +61,7 @@ const Button = ({
           background: background ?? defaultBackground,
           color: color ?? defaultColor,
         }}
-        title={title}
+        title={name}
         onClick={useDisableClick}
         className={className}
       >
@@ -75,4 +80,4 @@ const Button = ({
   return url ? linkButtonMarkup : buttonMarkup;
 };
 
-export default Button;
+export default MultiSelectButton;

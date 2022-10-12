@@ -17,9 +17,11 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
+      "@/config/*": ["config/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
       "@/hooks/*": ["hooks/*"],
+      "@/public/*": ["public/*"],
       "@/utilities/*": ["utilities/*"],
       "@/types": ["types"]
     }

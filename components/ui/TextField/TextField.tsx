@@ -5,6 +5,7 @@ import styles from "./textfield.module.scss";
 interface Props {
   name: string;
   type: string;
+  value: string;
   label?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -14,6 +15,7 @@ interface Props {
 const TextField = ({
   name,
   disabled,
+  value,
   type,
   placeholder,
   label,
@@ -34,6 +36,7 @@ const TextField = ({
       <input
         name={name}
         type={type}
+        value={value}
         disabled={disabled ?? false}
         defaultValue={placeholder ?? ""}
         className={styles.input}

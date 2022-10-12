@@ -18,24 +18,9 @@ export interface PRFilters {
   open: BoolOrBoth;
   merged: BoolOrBoth;
   assigned: BoolOrBoth;
+  comparedAuthors?: string[];
   comments?: string[];
   repos?: string[];
-}
-
-export interface PRequestData {
-  title?: boolean;
-  link?: boolean;
-  merged?: boolean;
-  open?: boolean;
-  createdBy?: boolean;
-  authors?: boolean;
-  repo?: boolean;
-  assignees?: boolean;
-  reviewers?: boolean;
-  filesNum?: boolean;
-  linesUp?: boolean;
-  linesDown?: boolean;
-  commentsNum?: boolean;
 }
 
 export interface PRDetails {
@@ -66,5 +51,6 @@ export enum ColJust {
   Center = "center",
   Right = "flex-end",
 }
+
 export type TableData = string | number | React.ReactNode;
 export type ColumnJustification = ColJust;

@@ -1,6 +1,5 @@
 import React from "react";
 
-import { classNames } from "../../../utilities/styling";
 import { SelectOption } from "../../../types";
 import styles from "./select.module.scss";
 

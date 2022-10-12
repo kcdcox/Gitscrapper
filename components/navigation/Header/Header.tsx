@@ -10,7 +10,9 @@ const Header = () => {
       <Link href="/">
         <h2 className={styles.header__title}>Gitscrapper</h2>
       </Link>
-      <Button title="Scrape Github" url="/github/prs" />
+      {/* <Button title="Scrape Github" url="/">
+        Scrape GitHub
+      </Button> */}
     </div>
   );
 };
