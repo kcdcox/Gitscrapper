@@ -3,6 +3,10 @@ type Falsy = boolean | undefined | null | 0;
 export const classNames = (...classes: (string | Falsy)[]) =>
   classes.filter(Boolean).join(" ");
 
+export const variationName = (name: string, value: string) => {
+  return `${name}${value.charAt(0).toUpperCase()}${value.slice(1)}`;
+};
+
 export const getSymbol = (i: number, symbol: string) =>
   new Array(Math.ceil(i) + 1).join(symbol);
 
@@ -28,9 +32,8 @@ const getBrick = (i: number) => {
 };
 
 export const getLoadingBar = (total: number, current: number) => {
-  let loaded = [...Array(current + 1)]
-    .map((_item, index) => getBrick(index))
-    .join("");
-  let left = new Array(total - current).join("⬛");
+  let percent = Math.floor(((current + 1) / total) * 37);
+  let loaded = [...Array(percent)].map((_, index) => getBrick(index)).join("");
+  let left = new Array(38 - percent).join("⬛");
   return `${loaded}${left}[${current + 1}/${total}]\r`;
 };

@@ -5,7 +5,7 @@ export const getLinesChangedGraphData = (PRs: any) => {
   const isArray = Array.isArray(PRs) && PRs.length > 1;
   const isNotSorted = moment(PRs[0].date).isAfter(PRs[1].date);
 
-  let biMonthlyData: any = [];
+  const biMonthlyData: any = [];
   const monthlyData: any = [];
   let sortedPRs = PRs;
   let index = 0;
@@ -14,7 +14,7 @@ export const getLinesChangedGraphData = (PRs: any) => {
   let endDate: any = getISODate(sortedPRs[sortedPRs.length - 1]?.date);
   let currDate: any = getISODate(sortedPRs[0]?.date);
 
-  const getRangeData = (start: any, end: any) => {
+  const getRangeData = (start: any, end: any, label: boolean) => {
     const format = "MMM 'YY";
     let linesRemoved = 0;
     let linesAdded = 0;
@@ -22,15 +22,17 @@ export const getLinesChangedGraphData = (PRs: any) => {
     for (index; index < sortedPRs.length; index++) {
       const date = getISODate(sortedPRs[index].date);
       if (moment(date).isAfter(start) && moment(date).isBefore(end)) {
-        linesAdded += parseInt(sortedPRs[index].linesAdded.slice(1).trim());
-        linesRemoved += parseInt(sortedPRs[index].linesRemoved.slice(1).trim());
+        linesAdded += parseInt(sortedPRs[index]?.linesAdded?.slice(1).trim());
+        linesRemoved += parseInt(
+          sortedPRs[index]?.linesRemoved?.slice(1).trim()
+        );
       } else {
         break;
       }
     }
 
     biMonthlyData.push({
-      name: `${moment(start).format(format)}`,
+      name: `${label ? moment(start).format(format) : ""}`,
       linesAdded: linesAdded,
       linesRemoved: linesRemoved,
       totalLines: linesAdded + linesRemoved,
@@ -41,8 +43,8 @@ export const getLinesChangedGraphData = (PRs: any) => {
     const start = moment(date).startOf("month");
     const middle = moment(start).add(15, "days");
     const end = moment(date).endOf("month");
-    getRangeData(start, middle);
-    getRangeData(middle, end);
+    getRangeData(start, middle, true);
+    getRangeData(middle, end, false);
   };
 
   while (index < sortedPRs.length && moment(currDate).isBefore(endDate)) {
@@ -59,6 +61,9 @@ export const getLinesChangedGraphData = (PRs: any) => {
       totalLines: biMonthlyData[i].totalLines + biMonthlyData[i + 1].totalLines,
     });
   }
+
+  monthlyData[monthlyData.length - 1].name = "";
+  biMonthlyData[biMonthlyData.length - 1].name = "";
 
   return {
     biMonthlyData,

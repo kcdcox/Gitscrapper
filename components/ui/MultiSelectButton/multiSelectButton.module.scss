@@ -4,30 +4,45 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  height: auto;
-  width: auto;
+  height: fit-content;
+  width: fit-content;
+  border: 1px solid var(--border-super-light);
+  border-radius: var(--button-radius);
+  overflow: hidden;
 }
 
-.button {
+.button__section {
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-radius: var(--button-radius);
-  height: 42px;
   width: fit-content;
   cursor: pointer;
-  padding: 5px 23px;
-  background: var(--surface-lavendar);
   color: var(--text-biege);
   font-size: 16px;
   font-weight: 500;
-  overflow: hidden;
-}
+  border-right: 1px solid var(--border-super-light);
 
-.plain {
-  border: none;
+  &:last-child {
+    border: none;
+  }
+
+  &.sizeSmall {
+    min-width: 70px;
+    height: 40px;
+    padding: 0 20px;
+  }
+
+  &.sizeMedium {
+    height: 42px;
+    padding: 0 25px;
+  }
+
+  &.sizeLarge {
+    height: 50px;
+    padding: 0 30px;
+  }
 }
 
 .decorated {

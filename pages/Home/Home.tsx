@@ -8,29 +8,19 @@ import { LinesChangedGraph } from "./components/LinesChangedGraph";
 import config from "config/default-gitscrape-config.json";
 import styles from "./home.module.scss";
 import {
-  renderScrapeTypeFilter,
   renderScrapeAuthorFilter,
   renderScrapeOpenFilter,
   renderScrapeMergeFilter,
   renderScrapeAssignedFilter,
+  cleanUpCSVData,
   CSVHeaders,
 } from "./helpers";
 
 export const Home: NextPage = () => {
   const [PRData, setPRData] = useState<any>();
-  const [filters, setFilters] = useState<PRFilters>({} as PRFilters);
+  const [filters, setFilters] = useState<PRFilters>(config as PRFilters);
   const updateFilters = (changes: Object) =>
     setFilters({ ...filters, ...changes });
-
-  const setDefaults = () => {
-    updateFilters({
-      scrapeType: config.DEFAULT_SCRAPETYPE,
-      merged: config.DEFAULT_MERGED,
-      open: config.DEFAULT_OPEN,
-      author: config.DEFAULT_AUTHOR,
-      assigned: config.DEFAULT_ASSIGNED,
-    });
-  };
 
   const getPRData = async () => {
     const response = await fetch("/api/gitscrape/gitscrape", {
@@ -44,11 +34,7 @@ export const Home: NextPage = () => {
   };
 
   const scrapeButtonEnabled = Boolean(
-    filters.assigned &&
-      filters.author &&
-      filters.open &&
-      filters.merged &&
-      filters.scrapeType
+    filters.assigned && filters.author && filters.open && filters.merged
   );
 
   const showLinesChangedGraph =
@@ -64,31 +50,29 @@ export const Home: NextPage = () => {
             <Button
               background={"#0c7760"}
               title="UseDefaults"
-              onClick={setDefaults}
+              onClick={() => setFilters(config as PRFilters)}
             >
               Use Defaults
             </Button>
           </div>
           <div className={styles.gitConfig__content}>
-            {renderScrapeTypeFilter(updateFilters, filters)}
             {renderScrapeAuthorFilter(updateFilters, filters)}
             {renderScrapeOpenFilter(updateFilters, filters)}
             {renderScrapeMergeFilter(updateFilters, filters)}
             {renderScrapeAssignedFilter(updateFilters, filters)}
-            <div className={styles.scrape__button}>
-              <Button
-                disabled={!scrapeButtonEnabled}
-                background={"#0c7760"}
-                title="Get PR Details"
-                onClick={getPRData}
-              >
-                Get PR Details
-              </Button>
-            </div>
-            <div className={styles.scrape__button}>
-              <Button background={"#0c7760"} title="Download CSV PRs">
+          </div>
+          <div className={styles.gitConfig__footer}>
+            <Button
+              disabled={!scrapeButtonEnabled}
+              title="Get PR Details"
+              onClick={getPRData}
+            >
+              Get PR Details
+            </Button>
+            {PRData && (
+              <Button title="Download CSV PRs">
                 <CSVLink
-                  data={PRData?.PRDetails ?? []}
+                  data={cleanUpCSVData(PRData?.PRDetails)}
                   headers={CSVHeaders}
                   target="_blank"
                   className={styles.csvLink}
@@ -98,7 +82,7 @@ export const Home: NextPage = () => {
                   Download PR Details as CSV
                 </CSVLink>
               </Button>
-            </div>
+            )}
           </div>
         </div>
         <div className={styles.stats}>

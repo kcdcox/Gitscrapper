@@ -1,83 +1,76 @@
 import React from "react";
-import Link from "next/link";
 import { SelectOption } from "../../../types";
 
-import { classNames } from "../../../utilities/styling";
+import { classNames, variationName } from "../../../utilities/styling";
 import styles from "./multiSelectButton.module.scss";
 
 interface Props {
   name: string;
   labels: SelectOption[];
-  children: React.ReactNode;
+  value: string;
+  size?: string;
   tooltip?: React.ReactNode;
-  url?: string;
-  plain?: boolean;
-  decorated?: boolean;
   background?: string;
   color?: string;
+  activeBackground?: string;
   disabled?: boolean;
   onChange(selected: string, id: string): void;
 }
 
 const MultiSelectButton = ({
   name,
-  children,
-  url,
-  plain,
   color,
-  decorated,
+  labels,
   background,
   disabled,
+  value,
   tooltip,
+  activeBackground,
+  size,
   onChange,
 }: Props) => {
   const className = classNames(
-    styles.button,
-    plain && styles.plain,
-    decorated && styles.decorated,
+    styles.button__section,
+    styles[variationName("size", size ?? "medium")],
     disabled && styles.disabled
   );
 
-  const handleChange = onChange
-    ? (event: React.ChangeEvent<HTMLSelectElement>) =>
-        onChange(event.currentTarget.value, name)
-    : undefined;
+  const handleChange = (label: SelectOption) => {
+    if (label.disabled !== false) onChange(label.value, name);
+  };
 
-  const defaultBackground = "#443f57";
-  const defaultColor = "#f9eee6";
+  const defaultActiveBackground = "#0c7760";
+  const defaultBackground = "#0f021c";
+  const defaultTextColor = "#ebfcf6";
 
-  const useDisableClick = () => {
-    if (disabled) {
-      () => {};
+  const getBackgroundColor = (label: SelectOption) => {
+    if (label.value === value) {
+      return activeBackground ? activeBackground : defaultActiveBackground;
     } else {
-      handleChange;
+      return background ? background : defaultBackground;
     }
   };
 
-  const buttonMarkup = (
+  return (
     <div className={styles.button__container}>
-      <div
-        style={{
-          background: background ?? defaultBackground,
-          color: color ?? defaultColor,
-        }}
-        title={name}
-        onClick={useDisableClick}
-        className={className}
-      >
-        {children}
-      </div>
+      {labels.map((label) => (
+        <div
+          key={label.value}
+          style={{
+            background: getBackgroundColor(label),
+            color: color ?? defaultTextColor,
+          }}
+          title={name}
+          onClick={() => handleChange(label)}
+          className={className}
+        >
+          {label.label}
+        </div>
+      ))}
+
       {tooltip && tooltip}
     </div>
   );
-
-  const linkButtonMarkup = (
-    <Link className={styles.link} href={url ?? ""}>
-      {buttonMarkup}
-    </Link>
-  );
-
-  return url ? linkButtonMarkup : buttonMarkup;
 };
 
 export default MultiSelectButton;

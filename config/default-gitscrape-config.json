@@ -1,7 +1,7 @@
 {
-  "DEFAULT_SCRAPETYPE": "prs",
-  "DEFAULT_MERGED": "true",
-  "DEFAULT_OPEN": "false",
-  "DEFAULT_AUTHOR": "kcdcox",
-  "DEFAULT_ASSIGNED": "both"
+  "scrapeType": "prs",
+  "merged": "true",
+  "open": "false",
+  "author": "kcdcox",
+  "assigned": "both"
 }

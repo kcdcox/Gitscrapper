@@ -55,8 +55,8 @@ const scrapePRPageLinks = async (
         waitUntil: "networkidle2",
         timeout: 10000,
       });
-      hasMorePages = false;
-      await page.waitForSelector("div.Box-row--drag-hide", { timeout: 10000 });
+      // hasMorePages = false;
+      await page.waitForSelector("div.Box-row--drag-hide", { timeout: 7000 });
       url = await getPRListURL(open, assigned, author, ++pageNum);
       try {
         PRLinks.push(

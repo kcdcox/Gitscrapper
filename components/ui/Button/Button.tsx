@@ -38,7 +38,7 @@ const Button = ({
     disabled && styles.disabled
   );
 
-  const defaultBackground = "#443f57";
+  const defaultBackground = "#0c7760";
   const defaultColor = "#f9eee6";
 
   const useDisableClick = () => {

@@ -12,6 +12,12 @@ export enum BoolOrBoth {
   Both = "both",
 }
 
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
 export interface PRFilters {
   scrapeType: string;
   author: string;
@@ -38,12 +44,6 @@ export interface PRDetails {
   linesUp?: number;
   linesDown?: number;
   commentsNum?: number;
-}
-
-export interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
 }
 
 export enum ColJust {

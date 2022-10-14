@@ -1,5 +1,6 @@
 import { SelectOption, BoolOrBoth } from "types";
-import { Select, TextField } from "@/components/ui";
+import moment from "moment";
+import { TextField, MultiSelectButton } from "components/ui";
 import styles from "./home.module.scss";
 
 export const CSVHeaders = [
@@ -11,10 +12,10 @@ export const CSVHeaders = [
   { key: "repo", label: "Repo" },
 ];
 
-export const prStateOptions: SelectOption[] = [
-  { label: "All", value: BoolOrBoth.Both },
+export const prOpenOptions: SelectOption[] = [
   { label: "Open", value: BoolOrBoth.True },
   { label: "Closed", value: BoolOrBoth.False },
+  { label: "All", value: BoolOrBoth.Both },
 ];
 
 export const prStatusOptions: SelectOption[] = [
@@ -26,13 +27,28 @@ export const prStatusOptions: SelectOption[] = [
 export const prAssignedOptions: SelectOption[] = [
   { label: "Created", value: BoolOrBoth.True },
   { label: "Assigned", value: BoolOrBoth.False },
-  { label: "Created & Assigned", value: BoolOrBoth.Both },
+  { label: "All", value: BoolOrBoth.Both },
 ];
 
 export const scrapeTypeOptions: SelectOption[] = [
   { label: "Pull requests", value: "prs" },
   { label: "Reviews", value: "reviews", disabled: true },
 ];
+
+export const cleanUpCSVData = (PRs: any) => {
+  const format = "MMM/DD/YYYY";
+  if (Array.isArray(PRs) && PRs.length > 0) {
+    return PRs.map((pr: any) => {
+      return {
+        ...pr,
+        linesAdded: parseInt(pr.linesAdded?.slice(1).trim()),
+        linesRemoved: parseInt(pr.linesRemoved?.slice(1).trim()),
+        date: moment(pr.date).format(format),
+      };
+    });
+  }
+  return [];
+};
 
 const getGitscrapeFilter = (
   title: string,
@@ -42,16 +58,17 @@ const getGitscrapeFilter = (
   value?: any,
   options?: SelectOption[]
 ) => (
-  <>
+  <div className={styles.option__section}>
     <div className={styles.section__description}>
       <h2 className={styles.description__title}>{title}</h2>
       <p className={styles.description__description}>{text}</p>
     </div>
     {options && (
-      <Select
+      <MultiSelectButton
         name={name}
+        size="small"
         value={value}
-        options={options}
+        labels={options}
         onChange={(val: string) => onChange({ [name]: val })}
       />
     )}
@@ -63,7 +80,7 @@ const getGitscrapeFilter = (
         onChange={(val: string) => onChange({ [name]: val })}
       />
     )}
-  </>
+  </div>
 );
 
 export const renderScrapeTypeFilter = (
@@ -86,7 +103,7 @@ export const renderScrapeAuthorFilter = (
 ) => {
   return getGitscrapeFilter(
     "Github author",
-    "Enter the github username of the author you want to scrape for.",
+    "Enter your github username for authentication.",
     "author",
     onChange,
     filters.author
@@ -101,11 +118,11 @@ export const renderScrapeOpenFilter = (
     filters.author &&
     getGitscrapeFilter(
       "Open, closed or all",
-      "Choose whether you want to scrape open, closed or all pull requests.",
+      "Scrape open, closed or all PRs.",
       "open",
       onChange,
       filters.open,
-      prStateOptions
+      prOpenOptions
     )
   );
 };
@@ -119,7 +136,7 @@ export const renderScrapeMergeFilter = (
     filters.open != BoolOrBoth.True &&
     getGitscrapeFilter(
       "Merged, closed or all",
-      "Choose whether you want to scrape merged, closed or all unopen pull requests.",
+      "Scrape merged, closed or all un-open PRs.",
       "merged",
       onChange,
       filters.merged,
@@ -135,8 +152,8 @@ export const renderScrapeAssignedFilter = (
   return (
     filters.author &&
     getGitscrapeFilter(
-      "Created, Assigned, or both",
-      "Choose whether you want to scrape PRs associated to the author(s) as creators, assignees or both.",
+      "Created, assigned, or all",
+      "Scrape authored, assigned, or all PRs.",
       "assigned",
       onChange,
       filters.assigned,

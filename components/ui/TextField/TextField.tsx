@@ -7,20 +7,11 @@ interface Props {
   type: string;
   value: string;
   label?: string;
-  placeholder?: string;
   disabled?: boolean;
   onChange(selected: string, id: string): void;
 }
 
-const TextField = ({
-  name,
-  disabled,
-  value,
-  type,
-  placeholder,
-  label,
-  onChange,
-}: Props) => {
+const TextField = ({ name, disabled, value, type, label, onChange }: Props) => {
   const handleChange = onChange
     ? (event: React.ChangeEvent<HTMLInputElement>) =>
         onChange(event.currentTarget.value, name)
@@ -38,7 +29,6 @@ const TextField = ({
         type={type}
         value={value}
         disabled={disabled ?? false}
-        defaultValue={placeholder ?? ""}
         className={styles.input}
         onChange={handleChange}
       />
