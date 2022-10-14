@@ -38,7 +38,7 @@ export const scrapeTypeOptions: SelectOption[] = [
 export const cleanUpCSVData = (PRs: any) => {
   const format = "MMM/DD/YYYY";
   if (Array.isArray(PRs) && PRs.length > 0) {
-    return PRs.map((pr: any) => {
+    return PRs.reverse().map((pr: any) => {
       return {
         ...pr,
         linesAdded: parseInt(pr.linesAdded?.slice(1).trim()),
