@@ -1,5 +1,5 @@
 {
-  "scrapeType": "prs",
+  "type": "prs",
   "merged": "true",
   "open": "false",
   "author": "kcdcox",

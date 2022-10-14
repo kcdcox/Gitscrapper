@@ -19,7 +19,7 @@ export interface SelectOption {
 }
 
 export interface PRFilters {
-  scrapeType: string;
+  type: string;
   author: string;
   open: BoolOrBoth;
   merged: BoolOrBoth;

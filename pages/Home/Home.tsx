@@ -11,6 +11,7 @@ import {
   renderScrapeAuthorFilter,
   renderScrapeOpenFilter,
   renderScrapeMergeFilter,
+  renderScrapeTypeFilter,
   renderScrapeAssignedFilter,
   cleanUpCSVData,
   CSVHeaders,
@@ -23,7 +24,10 @@ export const Home: NextPage = () => {
     setFilters({ ...filters, ...changes });
 
   const getPRData = async () => {
-    const response = await fetch("/api/gitscrape/gitscrape", {
+    const url = `/api/gitscrape/${
+      filters.type == "prs" ? "pullRequests" : "reviews"
+    }`;
+    const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({ filters: filters }),
       headers: { "Content-Type": "application/json" },
@@ -57,6 +61,7 @@ export const Home: NextPage = () => {
           </div>
           <div className={styles.gitConfig__content}>
             {renderScrapeAuthorFilter(updateFilters, filters)}
+            {renderScrapeTypeFilter(updateFilters, filters)}
             {renderScrapeOpenFilter(updateFilters, filters)}
             {renderScrapeMergeFilter(updateFilters, filters)}
             {renderScrapeAssignedFilter(updateFilters, filters)}

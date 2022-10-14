@@ -9,7 +9,7 @@ export const CSVHeaders = [
   { key: "linesAdded", label: "Lines +" },
   { key: "linesRemoved", label: "Lines -" },
   { key: "comments", label: "Comments" },
-  { key: "repo", label: "Repo" },
+  { key: "repo", label: "Repository" },
 ];
 
 export const prOpenOptions: SelectOption[] = [
@@ -36,9 +36,9 @@ export const scrapeTypeOptions: SelectOption[] = [
 ];
 
 export const cleanUpCSVData = (PRs: any) => {
-  const format = "MMM/DD/YYYY";
   if (Array.isArray(PRs) && PRs.length > 0) {
-    return PRs.reverse().map((pr: any) => {
+    const format = "MMM/DD/YYYY";
+    return PRs.map((pr: any) => {
       return {
         ...pr,
         linesAdded: parseInt(pr.linesAdded?.slice(1).trim()),
@@ -47,6 +47,7 @@ export const cleanUpCSVData = (PRs: any) => {
       };
     });
   }
+  console.log(PRs);
   return [];
 };
 
@@ -88,11 +89,11 @@ export const renderScrapeTypeFilter = (
   filters: any
 ) => {
   return getGitscrapeFilter(
-    "Scrape type",
-    "Choose whether you want to scrape a users pull requests or their reviews.",
-    "scrapeType",
+    "Pull requests or reviews",
+    "Scrape pull requests or reviews you approved.",
+    "type",
     onChange,
-    filters.scrapeType,
+    filters.type,
     scrapeTypeOptions
   );
 };
@@ -116,6 +117,7 @@ export const renderScrapeOpenFilter = (
 ) => {
   return (
     filters.author &&
+    filters.type === "prs" &&
     getGitscrapeFilter(
       "Open, closed or all",
       "Scrape open, closed or all PRs.",
@@ -134,6 +136,7 @@ export const renderScrapeMergeFilter = (
   return (
     filters.author &&
     filters.open != BoolOrBoth.True &&
+    filters.type === "prs" &&
     getGitscrapeFilter(
       "Merged, closed or all",
       "Scrape merged, closed or all un-open PRs.",
@@ -151,6 +154,7 @@ export const renderScrapeAssignedFilter = (
 ) => {
   return (
     filters.author &&
+    filters.type === "prs" &&
     getGitscrapeFilter(
       "Created, assigned, or all",
       "Scrape authored, assigned, or all PRs.",
